@@ -7,20 +7,20 @@ with open('README.md', 'rb') as f:
     DESCRIPTION = f.read().decode('utf-8')
 
 DEPENDENCIES = [
-    'networkx',
-    'PyYAML',
-    'numpy',
-    'pandas',
-    'xarray',
-    'bottleneck',
-    'scipy',
-    'pyzmq',
-    'coloredlogs',
-    'tables',
-    'pylsl',
-    'python-osc',
-    'python-dotenv',
-    'jsonschema'
+    'networkx>=2.3',
+    'PyYAML>=5.1',
+    'numpy>=1.17',
+    'pandas>=0.25',
+    'xarray>=0.13',
+    'bottleneck>=1.2',
+    'scipy>=1.3',
+    'pyzmq>=0.1.3',
+    'coloredlogs>=10.0',
+    'tables>=3.5',
+    'pylsl>=1.13',
+    'python-osc>=1.7',
+    'python-dotenv>=0.10',
+    'jsonschema>=3.1'
 ]
 
 setup(
