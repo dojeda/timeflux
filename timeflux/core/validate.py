@@ -1,6 +1,7 @@
 import logging
 import json
 import pathlib
+import pkgutil
 import os
 from jsonschema import Draft7Validator, validators, RefResolver
 from jsonschema.exceptions import ValidationError
@@ -32,9 +33,15 @@ Validator = extend_with_defaults(Draft7Validator)
 def resolver():
     """Load the schema and returns a resolver."""
     if RESOLVER: return RESOLVER
-    path = str(pathlib.Path(__file__).parents[1].joinpath('schema', 'app.json'))
-    with open(path) as stream:
-        schema = json.load(stream)
+    try:
+        contents = pkgutil.get_data('timeflux', 'schema/app.json')
+        if contents is None:
+            raise FileNotFoundError('timeflux schema could not be located or loaded: '
+                                    'pkgutil.get_data returned None')
+        schema = json.loads(contents)
+    except:
+        LOGGER.error('Failed to load app schema', exc_info=True)
+        return None
     globals()['RESOLVER'] = RefResolver('https://schema.timeflux.io/app.json', None).from_schema(schema)
     return RESOLVER
 
