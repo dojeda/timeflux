@@ -1,2 +1,3 @@
 include versioneer.py
 include timeflux/_version.py
+include timeflux/schema/app.json
