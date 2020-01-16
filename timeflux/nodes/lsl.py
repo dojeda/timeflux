@@ -107,7 +107,7 @@ class Receive(Node):
         self._channels = channels
         self._timeout = timeout
         self._max_samples = max_samples
-        self._offset = np.timedelta64(time() - pylsl.local_clock(), 's')
+        self._offset = np.timedelta64(int((time() - pylsl.local_clock()) * 1e9), 'ns')
 
     def update(self):
         if not self._inlet:
@@ -139,5 +139,5 @@ class Receive(Node):
                 if self._sync == 'local':
                     stamps += self._offset
                 elif self._sync == 'network':
-                    stamps = stamps + np.timedelta64(self._inlet.time_correction(), 's') + self._offset
+                    stamps = stamps + np.timedelta64(self._inlet.time_correction() * 1e9, 'ns') + self._offset
             self.o.set(values, stamps, self._labels, self._meta)
